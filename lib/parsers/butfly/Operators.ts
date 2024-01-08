@@ -1,14 +1,15 @@
+import { QueryParamOperators, QueryParamsType } from "../..";
+
 type ErrorCallback = (errorMessage: string) => void;
 type QueryString = string | null;
 type ValidFields = string[];
 
-type Search = [string, string, string][];
 
-function operatorsParamParser(errorCallback: ErrorCallback, queryString: QueryString, validFields: ValidFields): Search | undefined {
+function operatorsParamParser(errorCallback: ErrorCallback, queryString: QueryString, validFields: ValidFields): QueryParamsType[] | undefined {
     try {
         if (!queryString)
             return [];
-        const search: Search = [];
+        const search: QueryParamsType[] = [];
         const fields = queryString.replace(/[()]/gi, "").split(";");
         fields.map((field) => {
             const matchOperator = field.match(/(>=)|(<=)|(!=)|(!~)|(>)|(<)|(~)|(=)/g);
@@ -22,7 +23,7 @@ function operatorsParamParser(errorCallback: ErrorCallback, queryString: QuerySt
             const [key, value] = field.split(operator);
             if (!validFields.includes(key))
                 throw new Error("Invalid query param provided, valid fields are: " + validFields.join(", "));
-            search.push([key, operator, value]);
+            search.push([key, operator as QueryParamOperators, value]);
         });
         return search;
     }
