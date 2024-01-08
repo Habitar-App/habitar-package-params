@@ -1,3 +1,15 @@
+function nestedObjectAssign(object: Record<string, any>, path: string[], operator: string, value: any): void {
+    let currentField = object;
+    path.forEach((part, index) => {
+        if (index === path.length - 1) {
+            currentField[part] = { [operator]: value };
+        } else {
+            currentField[part] = currentField[part] || {};
+            currentField = currentField[part];
+        }
+    });
+}
+
 function prismaOperatorsParser(params: [string, string, any][]): Record<string, any> {
     const prismaOperators: Record<string, string> = {
         ">": "gt",
@@ -9,11 +21,15 @@ function prismaOperatorsParser(params: [string, string, any][]): Record<string, 
         "~": "contains",
     };
     const fields: Record<string, any> = {};
+
     params.forEach(([field, operator, value]) => {
+        const fieldParts = field.split(".");
         const prismaOperator = prismaOperators[operator];
-        fields[field] = { [prismaOperator]: value };
+
+        nestedObjectAssign(fields, fieldParts, prismaOperator, value);
     });
+
     return fields;
 }
 
-export { prismaOperatorsParser }
+export { prismaOperatorsParser };

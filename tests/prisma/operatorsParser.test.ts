@@ -28,4 +28,29 @@ describe('prismaOperatorsParser', () => {
     };
     expect(prismaOperatorsParser(params)).toEqual(expected);
   });
+
+
+  it('should handle with nested fields', () => {
+    const params: any = [
+      ["profile.age", ">", 30],
+      ["profile.name", "~", "John"],
+      ["profile.isActive", "=", true],
+      ["profile.score", ">=", 50],
+      ["profile.height", "<", 180],
+      ["profile.weight", "<=", 75],
+      ["profile.status", "!=", "inactive"]
+    ];
+    const expected = {
+      profile: {
+        age: { gt: 30 },
+        name: { contains: "John" },
+        isActive: { equals: true },
+        score: { gte: 50 },
+        height: { lt: 180 },
+        weight: { lte: 75 },
+        status: { not: "inactive" }
+      }
+    };
+    expect(prismaOperatorsParser(params)).toEqual(expected);
+  })
 });
