@@ -1,0 +1,28 @@
+{
+  "name": "@butfly/params",
+  "version": "1.4.0",
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "build": "npx tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ButflyApp/butfly-package-params.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ButflyApp/butfly-package-params/issues"
+  },
+  "devDependencies": {
+    "typescript": "^5.1.6",
+    "bun-types": "latest"
+  },
+  "homepage": "https://github.com/ButflyApp/butfly-package-params#readme",
+  "description": "",
+  "dependencies": {}
+}
