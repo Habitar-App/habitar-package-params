@@ -3,7 +3,7 @@ import * as prismaParsers from "@/parsers/prisma";
 
 import { QueryParamOperators, QueryParamsType } from "@/types/QueryParamTypes";
 
-export const parsers = {
+export default {
   includeParamParser: butflyParsers.includeParamParser,
   operatorsParamParser: butflyParsers.operatorsParamParser,
   sortParamParser: butflyParsers.sortParamParser,
