@@ -1,5 +1,5 @@
-import { includeParamParser } from "./Include";
-import { operatorsParamParser } from "./Operators";
-import { sortParamParser } from "./Sort";
+import { includeParamParser } from "@/parsers/butfly/Include";
+import { operatorsParamParser } from "@/parsers/butfly/Operators";
+import { sortParamParser } from "@/parsers/butfly/Sort";
 
 export { includeParamParser, operatorsParamParser, sortParamParser };
