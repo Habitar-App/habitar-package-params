@@ -1,17 +1,14 @@
-import {
-  includeParamParser,
-  queryParamParser,
-  sortParamParser,
-} from "@/parsers/butfly";
-import {
-  prismaIncludeParamParser,
-  prismaQueryParser,
-  prismaSearchParamParser,
-} from "@/parsers/prisma";
+import { includeParamParser } from "@/butfly/Include";
+import { queryParamParser } from "@/butfly/Query";
+import { sortParamParser } from "@/butfly/Sort";
+
+import { prismaIncludeParamParser } from "@/prisma/Include";
+import { prismaQueryParser } from "@/prisma/Query";
+import { prismaSearchParamParser } from "@/prisma/Search";
 
 import { QueryParamOperators, QueryParamsType } from "@/types/QueryParamTypes";
 
-export default {
+export {
   includeParamParser,
   queryParamParser,
   sortParamParser,
@@ -19,4 +16,5 @@ export default {
   prismaQueryParser,
   prismaSearchParamParser,
 };
+
 export type { QueryParamOperators, QueryParamsType };

@@ -1,4 +1,4 @@
-import { QueryParamOperators, QueryParamsType } from "@/index";
+import { QueryParamOperators, QueryParamsType } from "@/types/QueryParamTypes";
 
 type ErrorCallback = (errorMessage: string) => void;
 type QueryString = string | null;
