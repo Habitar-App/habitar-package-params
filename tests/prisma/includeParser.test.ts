@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'bun:test';
-import { prismaIncludeParamParser } from '../../lib/parsers/prisma/Include';
+import { prismaIncludeParamParser } from '../../src/parsers/prisma/Include';
 
 
 describe('prismaIncludeParamParser', () => {

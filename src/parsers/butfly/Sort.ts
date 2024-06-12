@@ -25,6 +25,7 @@ function sortParamParser(errorCallback: ErrorCallback, sortParam: SortParam, val
         return object;
     } catch (error: any) {
         errorCallback(error.message);
+        return {};
     }
 }
 

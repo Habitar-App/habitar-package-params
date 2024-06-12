@@ -2,7 +2,7 @@ type ErrorCallback = (errorMessage: string) => void;
 type IncludeParam = string | null | undefined;
 type ValidFields = string[] | null | undefined;
 
-function includeParamParser(errorCallback: ErrorCallback, includeParam: IncludeParam, validFields: ValidFields): string[] | undefined {
+function includeParamParser(errorCallback: ErrorCallback, includeParam: IncludeParam, validFields: ValidFields): string[] {
     try {
         if (!includeParam)
             return [];
@@ -15,8 +15,8 @@ function includeParamParser(errorCallback: ErrorCallback, includeParam: IncludeP
     }
     catch (error: any) {
         errorCallback(error.message);
+        return []
     }
-    return undefined;
 }
 
 export { includeParamParser }

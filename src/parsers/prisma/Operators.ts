@@ -19,6 +19,7 @@ function prismaOperatorsParser(params: [string, string, any][]): Record<string, 
         "=": "equals",
         "!=": "not",
         "~": "contains",
+        "@": "in"
     };
     const fields: Record<string, any> = {};
 

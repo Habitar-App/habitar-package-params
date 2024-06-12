@@ -1,12 +1,24 @@
 {
   "name": "@butfly/params",
-  "version": "1.4.4",
-  "main": "lib/index.ts",
+  "version": "1.4.9",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    "import": {
+      "types": "./dist/index.d.mts",
+      "default": "./dist/index.mjs"
+    },
+    "require": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
   "files": [
-    "lib"
+    "src"
   ],
   "scripts": {
-    "build": "npx tsc"
+    "build": "bunchee"
   },
   "repository": {
     "type": "git",
@@ -19,8 +31,9 @@
     "url": "https://github.com/ButflyApp/butfly-package-params/issues"
   },
   "devDependencies": {
-    "typescript": "^5.1.6",
-    "bun-types": "latest"
+    "bun-types": "latest",
+    "bunchee": "^5.1.6",
+    "typescript": "^5.1.6"
   },
   "homepage": "https://github.com/ButflyApp/butfly-package-params#readme",
   "description": "",

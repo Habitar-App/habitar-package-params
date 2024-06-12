@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { prismaSearchParamParser } from "../../lib/parsers/prisma";
+import { prismaSearchParamParser } from "../../src/parsers/prisma";
 
 describe('prismaSearchParamParser', () => {
   it('should return { OR: undefined } for empty or null search string', () => {

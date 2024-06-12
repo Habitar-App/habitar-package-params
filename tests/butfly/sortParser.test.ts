@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, jest } from "bun:test";
-import { sortParamParser } from "../../lib/parsers/butfly/Sort";
+import { sortParamParser } from "../../src/parsers/butfly/Sort";
 
 describe('sortParamParser', () => {
   const validFields = ["user", "posts", "user.profile", "posts.date"];
