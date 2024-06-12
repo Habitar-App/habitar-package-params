@@ -1,5 +1,5 @@
 import { prismaIncludeParamParser } from "@/parsers/prisma/Include";
 import { prismaSearchParamParser } from "@/parsers/prisma/Search";
-import { prismaOperatorsParser } from "@/parsers/prisma/Operators";
+import { prismaQueryParser } from "@/parsers/prisma/Query";
 
-export { prismaIncludeParamParser, prismaSearchParamParser, prismaOperatorsParser };
+export { prismaIncludeParamParser, prismaSearchParamParser, prismaQueryParser };

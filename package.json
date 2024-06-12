@@ -1,6 +1,6 @@
 {
   "name": "@butfly/params",
-  "version": "1.6.7",
+  "version": "1.6.8",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -28,10 +28,10 @@
     "url": "https://github.com/ButflyApp/butfly-package-params/issues"
   },
   "devDependencies": {
-    "bun-types": "latest",
-    "bunchee": "^5.1.6",
-    "typescript": "^5.1.6"
+    "bun-types": "^1.1.13",
+    "bunchee": "^5.1.6"
   },
   "homepage": "https://github.com/ButflyApp/butfly-package-params#readme",
-  "description": ""
+  "description": "",
+  "type": "module"
 }

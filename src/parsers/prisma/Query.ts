@@ -10,7 +10,7 @@ function nestedObjectAssign(object: Record<string, any>, path: string[], operato
     });
 }
 
-function prismaOperatorsParser(params: [string, string, any][]): Record<string, any> {
+function prismaQueryParser(params: [string, string, any][]): Record<string, any> {
     const prismaOperators: Record<string, string> = {
         ">": "gt",
         ">=": "gte",
@@ -33,4 +33,4 @@ function prismaOperatorsParser(params: [string, string, any][]): Record<string, 
     return fields;
 }
 
-export { prismaOperatorsParser };
+export { prismaQueryParser };

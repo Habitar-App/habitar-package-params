@@ -5,7 +5,7 @@ type QueryString = string | null;
 type ValidFields = string[];
 
 
-function operatorsParamParser(errorCallback: ErrorCallback, queryString: QueryString, validFields: ValidFields): QueryParamsType[] {
+function queryParamParser(errorCallback: ErrorCallback, queryString: QueryString, validFields: ValidFields): QueryParamsType[] {
     try {
         if (!queryString)
             return [];
@@ -44,4 +44,4 @@ function operatorsParamParser(errorCallback: ErrorCallback, queryString: QuerySt
     }
 }
 
-export { operatorsParamParser };
+export { queryParamParser };

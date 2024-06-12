@@ -1,10 +1,10 @@
 import { describe, expect, it } from "bun:test";
-import { prismaOperatorsParser } from "../../src/parsers/prisma";
+import { prismaQueryParser } from "../../src/parsers/prisma";
 
-describe('prismaOperatorsParser', () => {
+describe('prismaQueryParser', () => {
 
   it('should return an empty object for an empty input array', () => {
-    expect(prismaOperatorsParser([])).toEqual({});
+    expect(prismaQueryParser([])).toEqual({});
   });
 
   it('should correctly parse valid operators', () => {
@@ -26,7 +26,7 @@ describe('prismaOperatorsParser', () => {
       weight: { lte: 75 },
       status: { not: "inactive" }
     };
-    expect(prismaOperatorsParser(params)).toEqual(expected);
+    expect(prismaQueryParser(params)).toEqual(expected);
   });
 
 
@@ -51,7 +51,7 @@ describe('prismaOperatorsParser', () => {
         status: { not: "inactive" }
       }
     };
-    expect(prismaOperatorsParser(params)).toEqual(expected);
+    expect(prismaQueryParser(params)).toEqual(expected);
   })
 
   it('should handle with in operator', () => {
@@ -61,6 +61,6 @@ describe('prismaOperatorsParser', () => {
     const expected = {
       name: { in: ["John", "Michel", "Peter", "Lucian"] }
     };
-    expect(prismaOperatorsParser(params)).toEqual(expected);
+    expect(prismaQueryParser(params)).toEqual(expected);
   })
 });
