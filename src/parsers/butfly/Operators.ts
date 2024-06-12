@@ -1,4 +1,4 @@
-import { QueryParamOperators, QueryParamsType } from "../..";
+import { QueryParamOperators, QueryParamsType } from "../../index";
 
 type ErrorCallback = (errorMessage: string) => void;
 type QueryString = string | null;
@@ -22,7 +22,7 @@ function operatorsParamParser(errorCallback: ErrorCallback, queryString: QuerySt
             if (!operator) throw new Error("Invalid query param");
             
             let key;
-            let value;
+            let value: any;
             
             if (operator === "@") {
                 key = field.split("@")[0];
