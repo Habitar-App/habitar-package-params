@@ -34,4 +34,11 @@ describe('operatorsParamParser', () => {
     expect(result).toEqual([["user", "=", "John"], ["date", "<=", "2023-01-01"]]);
     expect(errorCallback).not.toHaveBeenCalled();
   });
+
+  it('should handle with in operator correctly', () => {
+    const result = operatorsParamParser(errorCallback, "user@[John,Michel, Peter , Lucian]", validFields);
+    console.log(result)
+    expect(result).toEqual([["user", "@", ["John", "Michel", "Peter", "Lucian"]]]);
+    expect(errorCallback).not.toHaveBeenCalled();
+  });
 });

@@ -53,4 +53,14 @@ describe('prismaOperatorsParser', () => {
     };
     expect(prismaOperatorsParser(params)).toEqual(expected);
   })
+
+  it('should handle with in operator', () => {
+    const params: any = [
+      ["name", "@", ["John", "Michel", "Peter", "Lucian"]]
+    ];
+    const expected = {
+      name: { in: ["John", "Michel", "Peter", "Lucian"] }
+    };
+    expect(prismaOperatorsParser(params)).toEqual(expected);
+  })
 });

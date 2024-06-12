@@ -12,15 +12,26 @@ function operatorsParamParser(errorCallback: ErrorCallback, queryString: QuerySt
         const search: QueryParamsType[] = [];
         const fields = queryString.replace(/[()]/gi, "").split(";");
         fields.map((field) => {
-            const matchOperator = field.match(/(>=)|(<=)|(!=)|(!~)|(>)|(<)|(~)|(=)/g);
-            if (!matchOperator)
-                throw new Error("Operator was not found");
-            if (matchOperator.length > 1)
-                throw new Error("You must provide only one operator");
+            const matchOperator = field.match(/(>=)|(<=)|(!=)|(!~)|(>)|(<)|(~)|(=)|(@)/g);
+
+            if (!matchOperator) throw new Error("Operator was not found");
+
+            if (matchOperator.length > 1) throw new Error("You must provide only one operator");
             const [operator] = matchOperator;
-            if (!operator)
-                throw new Error("Invalid query param");
-            const [key, value] = field.split(operator);
+
+            if (!operator) throw new Error("Invalid query param");
+            
+            let key;
+            let value;
+            
+            if (operator === "@") {
+                key = field.split("@")[0];
+                value = field.split("@")[1].replace(/[\[\]]/gi, "").split(",").map((item) => item.trim());
+            } else {
+                key = field.split(operator)[0];
+                value = field.split(operator)[1];
+            }
+
             if (!validFields.includes(key))
                 throw new Error("Invalid query param provided, valid fields are: " + validFields.join(", "));
             search.push([key, operator as QueryParamOperators, value]);
