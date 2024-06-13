@@ -1,4 +1,4 @@
-import { prismaIncludeParamParser } from '../../src/parsers/prisma/Include';
+import { prismaIncludeParamParser } from '../../src/prisma/Include';
 
 
 describe('prismaIncludeParamParser', () => {

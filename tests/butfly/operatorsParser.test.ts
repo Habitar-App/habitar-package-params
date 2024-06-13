@@ -1,5 +1,5 @@
 import { describe, afterEach, it, expect, jest } from "bun:test";
-import { operatorsParamParser } from "../../src/parsers/butfly";
+import { operatorsParamParser } from "../../src/butfly";
 describe('operatorsParamParser', () => {
   const validFields = ["user", "post", "date"];
   const errorCallback = jest.fn();
