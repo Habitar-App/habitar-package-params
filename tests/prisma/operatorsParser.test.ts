@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { prismaQueryParser } from "../../src/parsers/prisma";
+import { prismaQueryParser } from "@/.";
 
 describe('prismaQueryParser', () => {
 

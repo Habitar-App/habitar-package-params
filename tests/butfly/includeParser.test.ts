@@ -1,4 +1,4 @@
-import { includeParamParser } from "../../src/parsers/butfly/Include";
+import { includeParamParser } from "@/.";
 import { describe, expect, it } from "bun:test";
 
 describe("includeParamParser", () => {

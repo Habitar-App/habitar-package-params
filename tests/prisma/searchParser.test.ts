@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { prismaSearchParamParser } from "../../src/parsers/prisma";
+import { prismaSearchParamParser } from "@/.";
 
 describe('prismaSearchParamParser', () => {
   it('should return { OR: undefined } for empty or null search string', () => {
@@ -14,11 +14,12 @@ describe('prismaSearchParamParser', () => {
 
   it('should construct a correct search query object for valid inputs', () => {
     const search = "john";
-    const validFields = ["name", "email"];
+    const validFields = ["name", "customer.name", "email"];
     const expected = {
       OR: [
         { name: { contains: "john", mode: "insensitive" } },
-        { email: { contains: "john", mode: "insensitive" } }
+        { customer: { name: { contains: "john", mode: "insensitive" } } },
+        { email: { contains: "john", mode: "insensitive" } },
       ]
     };
     expect(prismaSearchParamParser(search, validFields)).toEqual(expected);
