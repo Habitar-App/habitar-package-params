@@ -1,7 +1,7 @@
 import { describe, afterEach, it, expect, jest } from "bun:test";
 import { queryParamParser } from "@/.";
 describe("queryParamParser", () => {
-  const validFields = ["user", "post", "date", "price", "priceDetails.price"];
+  const validFields = ["user", "post", "date", "price", "priceDetails.salePrice", "priceDetails.rentPrice"];
   const errorCallback = jest.fn();
 
   afterEach(() => {
@@ -60,21 +60,33 @@ describe("queryParamParser", () => {
   });
 
   it("should handle with number values correctly", () => {
-    const result = queryParamParser(errorCallback, "price=30", validFields, {
+    const result = queryParamParser(errorCallback, "price=30", validFields, [{
       field: "price",
       type: "number",
-    });
+    }]);
     expect(result).toEqual([["price", "=", 30]]);
     expect(errorCallback).not.toHaveBeenCalled();
   });
+
   it("should handle with number values correctly when nested values", () => {
     const result = queryParamParser(
       errorCallback,
-      "priceDetails.price=30",
+      "priceDetails.salePrice=30",
       validFields,
-      { field: "priceDetails.price", type: "number" }
+      [{ field: "priceDetails.salePrice", type: "number" }]
     );
-    expect(result).toEqual([["priceDetails.price", "=", 30]]);
+    expect(result).toEqual([["priceDetails.salePrice", "=", 30]]);
+    expect(errorCallback).not.toHaveBeenCalled();
+  });
+
+  it("should handle with number values correctly when nested values and multiple fields are provided", () => {
+    const result = queryParamParser(
+      errorCallback,
+      "priceDetails.salePrice=30;priceDetails.rentPrice=30",
+      validFields,
+      [{ field: "priceDetails.salePrice", type: "number" }, { field: "priceDetails.rentPrice", type: "number" }, ]
+    );
+    expect(result).toEqual([["priceDetails.salePrice", "=", 30], ["priceDetails.rentPrice", "=", 30]]);
     expect(errorCallback).not.toHaveBeenCalled();
   });
 });

@@ -1,9 +1,17 @@
 {
   "name": "@habitar/params",
-  "version": "1.7.2",
+  "version": "1.8.0",
+  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Habitar-App/habitar-package-params.git"
+  },
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
+  "devDependencies": {
+    "bun-types": "^1.1.13",
+    "bunchee": "^5.1.6"
+  },
   "exports": {
     "import": {
       "types": "./dist/index.d.mts",
@@ -14,23 +22,15 @@
       "default": "./dist/index.js"
     }
   },
-  "scripts": {
-    "build": "bunchee"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Habitar-App/habitar-package-params.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/Habitar-App/habitar-package-params/issues"
   },
-  "devDependencies": {
-    "bun-types": "^1.1.13",
-    "bunchee": "^5.1.6"
-  },
+  "description": "",
   "homepage": "https://github.com/Habitar-App/habitar-package-params#readme",
-  "description": ""
+  "keywords": [],
+  "license": "ISC",
+  "scripts": {
+    "build": "bunchee"
+  },
+  "types": "./dist/index.d.ts"
 }

@@ -8,7 +8,7 @@ function queryParamParser(
   errorCallback: ErrorCallback,
   queryString: QueryString,
   validFields: ValidFields,
-  fieldsConfigs?: { field: string; type: "number" | "string" | "boolean" }
+  fieldsConfigs?: { field: string; type: "number" | "string" | "boolean" }[]
 ): QueryParamsType[] {
   try {
     if (!queryString) return [];
@@ -42,10 +42,12 @@ function queryParamParser(
         value = field.split(operator)[1];
       }
 
-      if(fieldsConfigs) {
-        if(fieldsConfigs.field === key) {
-          if(fieldsConfigs.type === "number") {
-            value = Number(value);
+      if (fieldsConfigs?.length) {
+        for (const config of fieldsConfigs) {
+          if (config.field === key) {
+            if (config.type === "number") {
+              value = Number(value);
+            }
           }
         }
       }
