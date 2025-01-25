@@ -1,4 +1,4 @@
-# @butfly/params
+# @habitar/params
 
 To install dependencies:
 

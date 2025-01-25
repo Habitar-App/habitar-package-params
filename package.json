@@ -1,5 +1,5 @@
 {
-  "name": "@butfly/params",
+  "name": "@habitar/params",
   "version": "1.7.2",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -19,18 +19,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ButflyApp/butfly-package-params.git"
+    "url": "git+https://github.com/Habitar-App/habitar-package-params.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ButflyApp/butfly-package-params/issues"
+    "url": "https://github.com/Habitar-App/habitar-package-params/issues"
   },
   "devDependencies": {
     "bun-types": "^1.1.13",
     "bunchee": "^5.1.6"
   },
-  "homepage": "https://github.com/ButflyApp/butfly-package-params#readme",
+  "homepage": "https://github.com/Habitar-App/habitar-package-params#readme",
   "description": ""
 }
