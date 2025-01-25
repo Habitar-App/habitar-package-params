@@ -1,6 +1,6 @@
-import { includeParamParser } from "@/butfly/Include";
-import { queryParamParser } from "@/butfly/Query";
-import { sortParamParser } from "@/butfly/Sort";
+import { includeParamParser } from "@/habitar/Include";
+import { queryParamParser } from "@/habitar/Query";
+import { sortParamParser } from "@/habitar/Sort";
 
 import { prismaIncludeParamParser } from "@/prisma/Include";
 import { prismaQueryParser } from "@/prisma/Query";
