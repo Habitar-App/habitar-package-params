@@ -61,7 +61,7 @@ function queryParamParser(
     });
     return search;
   } catch (error: any) {
-    errorCallback(error.message);
+    errorCallback(error.message || error);
     return [];
   }
 }
