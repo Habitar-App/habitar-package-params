@@ -1,18 +1,26 @@
 import { describe, expect, it } from "bun:test";
 import { prismaSearchParamParser } from "@/.";
 
-describe('prismaSearchParamParser', () => {
-  it('should return { OR: undefined } for empty or null search string', () => {
-    expect(prismaSearchParamParser(null as any, ["name", "email"])).toEqual({ OR: undefined });
-    expect(prismaSearchParamParser("", ["name", "email"])).toEqual({ OR: undefined });
+describe("prismaSearchParamParser", () => {
+  it("should return { OR: undefined } for empty or null search string", () => {
+    expect(prismaSearchParamParser(null as any, ["name", "email"])).toEqual({
+      OR: undefined,
+    });
+    expect(prismaSearchParamParser("", ["name", "email"])).toEqual({
+      OR: undefined,
+    });
   });
 
-  it('should return { OR: undefined } for null or undefined valid fields array', () => {
-    expect(prismaSearchParamParser("test", null as any)).toEqual({ OR: undefined });
-    expect(prismaSearchParamParser("test", undefined as any)).toEqual({ OR: undefined });
+  it("should return { OR: undefined } for null or undefined valid fields array", () => {
+    expect(prismaSearchParamParser("test", null as any)).toEqual({
+      OR: undefined,
+    });
+    expect(prismaSearchParamParser("test", undefined as any)).toEqual({
+      OR: undefined,
+    });
   });
 
-  it('should construct a correct search query object for valid inputs', () => {
+  it("should construct a correct search query object for valid inputs", () => {
     const search = "john";
     const validFields = ["name", "customer.name", "email"];
     const expected = {
@@ -20,12 +28,12 @@ describe('prismaSearchParamParser', () => {
         { name: { contains: "john", mode: "insensitive" } },
         { customer: { name: { contains: "john", mode: "insensitive" } } },
         { email: { contains: "john", mode: "insensitive" } },
-      ]
+      ],
     };
     expect(prismaSearchParamParser(search, validFields)).toEqual(expected);
   });
 
-  it('should handle empty valid fields array', () => {
+  it("should handle empty valid fields array", () => {
     const search = "john";
     const validFields: any = [];
     const expected = { OR: undefined };
@@ -33,18 +41,26 @@ describe('prismaSearchParamParser', () => {
   });
 });
 
-describe('prismaSearchParamParser', () => {
-  it('should return { OR: undefined } for empty or null search string', () => {
-    expect(prismaSearchParamParser(null as any, ["name", "email"])).toEqual({ OR: undefined });
-    expect(prismaSearchParamParser("", ["name", "email"])).toEqual({ OR: undefined });
+describe("prismaSearchParamParser", () => {
+  it("should return { OR: undefined } for empty or null search string", () => {
+    expect(prismaSearchParamParser(null as any, ["name", "email"])).toEqual({
+      OR: undefined,
+    });
+    expect(prismaSearchParamParser("", ["name", "email"])).toEqual({
+      OR: undefined,
+    });
   });
 
-  it('should return { OR: undefined } for null or undefined valid fields array', () => {
-    expect(prismaSearchParamParser("test", null as any)).toEqual({ OR: undefined });
-    expect(prismaSearchParamParser("test", undefined as any)).toEqual({ OR: undefined });
+  it("should return { OR: undefined } for null or undefined valid fields array", () => {
+    expect(prismaSearchParamParser("test", null as any)).toEqual({
+      OR: undefined,
+    });
+    expect(prismaSearchParamParser("test", undefined as any)).toEqual({
+      OR: undefined,
+    });
   });
 
-  it('should construct a correct search query object for valid inputs', () => {
+  it("should construct a correct search query object for valid inputs", () => {
     const search = "john";
     const validFields = ["name", "customer.name", "email"];
     const expected = {
@@ -52,12 +68,12 @@ describe('prismaSearchParamParser', () => {
         { name: { contains: "john", mode: "insensitive" } },
         { customer: { name: { contains: "john", mode: "insensitive" } } },
         { email: { contains: "john", mode: "insensitive" } },
-      ]
+      ],
     };
     expect(prismaSearchParamParser(search, validFields)).toEqual(expected);
   });
 
-  it('should handle empty valid fields array', () => {
+  it("should handle empty valid fields array", () => {
     const search = "john";
     const validFields: any = [];
     const expected = { OR: undefined };
@@ -65,48 +81,56 @@ describe('prismaSearchParamParser', () => {
   });
 
   // Testes adicionais para full text search
-  it('should construct a correct full text search query object for valid inputs with fullText option', () => {
+  it("should construct a correct full text search query object for valid inputs with fullText option", () => {
     const search = "cataguases rio";
     const validFields = ["address.city"];
     const expected = {
-      OR: [
-        { address: { city: { search: "cataguases|rio" } } },
-      ]
+      params: { OR: [{ address: { city: { search: "cataguases|rio" } } }] },
+      search: "cataguases|rio",
     };
-    expect(prismaSearchParamParser(search, validFields, { fullText: true })).toEqual(expected);
+    expect(
+      prismaSearchParamParser(search, validFields, { fullText: true })
+    ).toEqual(expected);
   });
 
-  it('should construct a correct full text search query object for multiple valid fields with fullText option', () => {
+  it("should construct a correct full text search query object for multiple valid fields with fullText option", () => {
     const search = "alpha beta";
     const validFields = ["name", "profile.description"];
     const expected = {
-      OR: [
-        { name: { search: "alpha|beta" } },
-        { profile: { description: { search: "alpha|beta" } } },
-      ]
+      params: {
+        OR: [
+          { name: { search: "alpha|beta" } },
+          { profile: { description: { search: "alpha|beta" } } },
+        ],
+      },
+      search: "alpha|beta",
     };
-    expect(prismaSearchParamParser(search, validFields, { fullText: true })).toEqual(expected);
+    expect(
+      prismaSearchParamParser(search, validFields, { fullText: true })
+    ).toEqual(expected);
   });
 
-  it('should handle extra spaces in search string when using fullText option', () => {
+  it("should handle extra spaces in search string when using fullText option", () => {
     const search = "   hello    world   ";
     const validFields = ["bio"];
     const expected = {
-      OR: [
-        { bio: { search: "hello|world" } },
-      ]
+      params: { OR: [{ bio: { search: "hello|world" } }] },
+      search: "hello|world",
     };
-    expect(prismaSearchParamParser(search, validFields, { fullText: true })).toEqual(expected);
+    expect(
+      prismaSearchParamParser(search, validFields, { fullText: true })
+    ).toEqual(expected);
   });
 
-  it('should construct a correct query for fullText search with a single word', () => {
+  it("should construct a correct query for fullText search with a single word", () => {
     const search = "singular";
     const validFields = ["description"];
     const expected = {
-      OR: [
-        { description: { search: "singular" } },
-      ]
+      params: { OR: [{ description: { search: "singular" } }] },
+      search: "singular",
     };
-    expect(prismaSearchParamParser(search, validFields, { fullText: true })).toEqual(expected);
+    expect(
+      prismaSearchParamParser(search, validFields, { fullText: true })
+    ).toEqual(expected);
   });
 });
