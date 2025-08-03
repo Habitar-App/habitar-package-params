@@ -63,4 +63,40 @@ describe('prismaQueryParser', () => {
     };
     expect(prismaQueryParser(params)).toEqual(expected);
   })
+
+  it('should handle with between operator', () => {
+    const params: any = [
+      ["price", "><", [10, 50]]
+    ];
+    const expected = {
+      price: { between: [10, 50] }
+    };
+    expect(prismaQueryParser(params)).toEqual(expected);
+  });
+
+  it('should handle with between operator in nested fields', () => {
+    const params: any = [
+      ["product.price", "><", [100, 500]]
+    ];
+    const expected = {
+      product: {
+        price: { between: [100, 500] }
+      }
+    };
+    expect(prismaQueryParser(params)).toEqual(expected);
+  });
+
+  it('should handle multiple operators including between', () => {
+    const params: any = [
+      ["price", "><", [10, 50]],
+      ["name", "~", "Product"],
+      ["category", "@", ["Electronics", "Books"]]
+    ];
+    const expected = {
+      price: { between: [10, 50] },
+      name: { contains: "Product" },
+      category: { in: ["Electronics", "Books"] }
+    };
+    expect(prismaQueryParser(params)).toEqual(expected);
+  });
 });
