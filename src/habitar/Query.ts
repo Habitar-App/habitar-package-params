@@ -58,9 +58,7 @@ function queryParamParser(
           if (config.field === key) {
             if (config.type === "number") {
               if (operator === "><") {
-                // For between operator, convert both values to numbers
                 value = value.map((v: string) => Number(v));
-                // Validate that both values are valid numbers
                 if (value.some((v: number) => isNaN(v))) {
                   throw new Error("Between operator requires valid numbers");
                 }

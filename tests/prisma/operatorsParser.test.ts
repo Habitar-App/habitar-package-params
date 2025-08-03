@@ -69,7 +69,7 @@ describe('prismaQueryParser', () => {
       ["price", "><", [10, 50]]
     ];
     const expected = {
-      price: { between: [10, 50] }
+      price: { gte: 10, lte: 50 }
     };
     expect(prismaQueryParser(params)).toEqual(expected);
   });
@@ -80,7 +80,7 @@ describe('prismaQueryParser', () => {
     ];
     const expected = {
       product: {
-        price: { between: [100, 500] }
+        price: { gte: 100, lte: 500 }
       }
     };
     expect(prismaQueryParser(params)).toEqual(expected);
@@ -93,7 +93,7 @@ describe('prismaQueryParser', () => {
       ["category", "@", ["Electronics", "Books"]]
     ];
     const expected = {
-      price: { between: [10, 50] },
+      price: { lte: 50, gte: 10 },
       name: { contains: "Product" },
       category: { in: ["Electronics", "Books"] }
     };
