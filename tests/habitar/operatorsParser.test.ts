@@ -89,4 +89,66 @@ describe("queryParamParser", () => {
     expect(result).toEqual([["priceDetails.salePrice", "=", 30], ["priceDetails.rentPrice", "=", 30]]);
     expect(errorCallback).not.toHaveBeenCalled();
   });
+
+  it("should handle between operator correctly with numbers", () => {
+    const result = queryParamParser(
+      errorCallback,
+      "price><[10,50]",
+      validFields,
+      [{ field: "price", type: "number" }]
+    );
+    expect(result).toEqual([["price", "><", [10, 50]]]);
+    expect(errorCallback).not.toHaveBeenCalled();
+  });
+
+  it("should handle between operator with nested fields", () => {
+    const result = queryParamParser(
+      errorCallback,
+      "priceDetails.salePrice><[100,500]",
+      validFields,
+      [{ field: "priceDetails.salePrice", type: "number" }]
+    );
+    expect(result).toEqual([["priceDetails.salePrice", "><", [100, 500]]]);
+    expect(errorCallback).not.toHaveBeenCalled();
+  });
+
+  it("should throw error when between operator receives less than 2 values", () => {
+    queryParamParser(
+      errorCallback,
+      "price><[10]",
+      validFields,
+      [{ field: "price", type: "number" }]
+    );
+    expect(errorCallback).toHaveBeenCalledWith("Between operator requires exactly 2 values");
+  });
+
+  it("should throw error when between operator receives more than 2 values", () => {
+    queryParamParser(
+      errorCallback,
+      "price><[10,20,30]",
+      validFields,
+      [{ field: "price", type: "number" }]
+    );
+    expect(errorCallback).toHaveBeenCalledWith("Between operator requires exactly 2 values");
+  });
+
+  it("should throw error when between operator receives invalid numbers", () => {
+    queryParamParser(
+      errorCallback,
+      "price><[abc,50]",
+      validFields,
+      [{ field: "price", type: "number" }]
+    );
+    expect(errorCallback).toHaveBeenCalledWith("Between operator requires valid numbers");
+  });
+
+  it("should handle between operator with string values (not configured as number)", () => {
+    const result = queryParamParser(
+      errorCallback,
+      "user><[John,Jane]",
+      validFields
+    );
+    expect(result).toEqual([["user", "><", ["John", "Jane"]]]);
+    expect(errorCallback).not.toHaveBeenCalled();
+  });
 });

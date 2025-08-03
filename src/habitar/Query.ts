@@ -16,7 +16,7 @@ function queryParamParser(
     const fields = queryString.replace(/[()]/gi, "").split(";");
     fields.map((field) => {
       const matchOperator = field.match(
-        /(>=)|(<=)|(!=)|(!~)|(>)|(<)|(~)|(=)|(@)/g
+        /(>=)|(<=)|(!=)|(!~)|(><)|(>)|(<)|(~)|(=)|(@)/g
       );
 
       if (!matchOperator) throw new Error("Operator was not found");
@@ -37,6 +37,17 @@ function queryParamParser(
           .replace(/[\[\]]/gi, "")
           .split(",")
           .map((item) => item.trim());
+      } else if (operator === "><") {
+        key = field.split("><")[0];
+        const valueString = field.split("><")[1];
+        value = valueString
+          .replace(/[\[\]]/gi, "")
+          .split(",")
+          .map((item) => item.trim());
+
+        if (value.length !== 2) {
+          throw new Error("Between operator requires exactly 2 values");
+        }
       } else {
         key = field.split(operator)[0];
         value = field.split(operator)[1];
@@ -46,7 +57,16 @@ function queryParamParser(
         for (const config of fieldsConfigs) {
           if (config.field === key) {
             if (config.type === "number") {
-              value = Number(value);
+              if (operator === "><") {
+                // For between operator, convert both values to numbers
+                value = value.map((v: string) => Number(v));
+                // Validate that both values are valid numbers
+                if (value.some((v: number) => isNaN(v))) {
+                  throw new Error("Between operator requires valid numbers");
+                }
+              } else {
+                value = Number(value);
+              }
             }
           }
         }

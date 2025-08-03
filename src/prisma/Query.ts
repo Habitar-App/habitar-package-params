@@ -16,10 +16,11 @@ function prismaQueryParser(params: [string, string, any][]): Record<string, any>
         ">=": "gte",
         "<": "lt",
         "<=": "lte",
+        "><": "between",
         "=": "equals",
         "!=": "not",
         "~": "contains",
-        "@": "in"
+        "@": "in",
     };
     const fields: Record<string, any> = {};
 
