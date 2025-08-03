@@ -2,9 +2,14 @@ function nestedObjectAssign(object: Record<string, any>, path: string[], operato
     let currentField = object;
     path.forEach((part, index) => {
         if (index === path.length - 1) {
-            currentField[part] = { [operator]: value };
+            if (!currentField[part]) {
+                currentField[part] = {};
+            }
+            currentField[part][operator] = value;
         } else {
-            currentField[part] = currentField[part] || {};
+            if (!currentField[part]) {
+                currentField[part] = {};
+            }
             currentField = currentField[part];
         }
     });
@@ -16,7 +21,6 @@ function prismaQueryParser(params: [string, string, any][]): Record<string, any>
         ">=": "gte",
         "<": "lt",
         "<=": "lte",
-        "><": "between",
         "=": "equals",
         "!=": "not",
         "~": "contains",
@@ -26,9 +30,15 @@ function prismaQueryParser(params: [string, string, any][]): Record<string, any>
 
     params.forEach(([field, operator, value]) => {
         const fieldParts = field.split(".");
-        const prismaOperator = prismaOperators[operator];
-
-        nestedObjectAssign(fields, fieldParts, prismaOperator, value);
+        
+        if (operator === "><") {
+            const [min, max] = value as [number, number];
+            nestedObjectAssign(fields, fieldParts, "gte", min);
+            nestedObjectAssign(fields, fieldParts, "lte", max);
+        } else {
+            const prismaOperator = prismaOperators[operator];
+            nestedObjectAssign(fields, fieldParts, prismaOperator, value);
+        }
     });
 
     return fields;
