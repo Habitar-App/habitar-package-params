@@ -99,4 +99,50 @@ describe('prismaQueryParser', () => {
     };
     expect(prismaQueryParser(params)).toEqual(expected);
   });
+
+  it('should handle n-n list relation with some operator', () => {
+    const params: any = [
+      ["owners.uid", "=", "owner_1"]
+    ];
+    const expected = {
+      owners: {
+        some: {
+          uid: { equals: "owner_1" }
+        }
+      }
+    };
+    expect(prismaQueryParser(params, { listRelations: ["owners"] })).toEqual(expected);
+  });
+
+  it('should handle n-n list relation with some operator and array values', () => {
+    const params: any = [
+      ["owners.uid", "@", ["owner_1", "owner_2"]]
+    ];
+    const expected = {
+      owners: {
+        some: {
+          uid: { in: ["owner_1", "owner_2"] }
+        }
+      }
+    };
+    expect(prismaQueryParser(params, { listRelations: ["owners"] })).toEqual(expected);
+  });
+
+  it('should handle nested list relations using some operator', () => {
+    const params: any = [
+      ["realStates.owners.uid", "=", "owner_1"]
+    ];
+    const expected = {
+      realStates: {
+        some: {
+          owners: {
+            some: {
+              uid: { equals: "owner_1" }
+            }
+          }
+        }
+      }
+    };
+    expect(prismaQueryParser(params, { listRelations: ["realStates", "realStates.owners"] })).toEqual(expected);
+  });
 });

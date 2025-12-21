@@ -52,7 +52,6 @@ describe("queryParamParser", () => {
       "user@[John,Michel, Peter , Lucian]",
       validFields
     );
-    console.log(result);
     expect(result).toEqual([
       ["user", "@", ["John", "Michel", "Peter", "Lucian"]],
     ]);
