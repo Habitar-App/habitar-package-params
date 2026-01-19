@@ -1,7 +1,7 @@
 import { describe, afterEach, it, expect, jest } from "bun:test";
 import { queryParamParser } from "@/.";
 describe("queryParamParser", () => {
-  const validFields = ["user", "post", "date", "price", "priceDetails.salePrice", "priceDetails.rentPrice"];
+  const validFields = ["user", "post", "date", "price", "priceDetails.salePrice", "priceDetails.rentPrice", "email"];
   const errorCallback = jest.fn();
 
   afterEach(() => {
@@ -36,13 +36,24 @@ describe("queryParamParser", () => {
   it("should process valid query strings correctly", () => {
     const result = queryParamParser(
       errorCallback,
-      "user=John;date<=2023-01-01",
+      "user=John;date<=2023-01-01;email=test@test.com",
       validFields
     );
     expect(result).toEqual([
       ["user", "=", "John"],
       ["date", "<=", "2023-01-01"],
+      ["email", "=", "test@test.com"],
     ]);
+    expect(errorCallback).not.toHaveBeenCalled();
+  });
+
+  it("should allow email values when using equals operator", () => {
+    const result = queryParamParser(
+      errorCallback,
+      "user=test@test.com",
+      validFields
+    );
+    expect(result).toEqual([["user", "=", "test@test.com"]]);
     expect(errorCallback).not.toHaveBeenCalled();
   });
 
@@ -55,6 +66,16 @@ describe("queryParamParser", () => {
     expect(result).toEqual([
       ["user", "@", ["John", "Michel", "Peter", "Lucian"]],
     ]);
+    expect(errorCallback).not.toHaveBeenCalled();
+  });
+
+  it("should allow emails when using in operator", () => {
+    const result = queryParamParser(
+      errorCallback,
+      "user@[test@test.com, foo@bar.com]",
+      validFields
+    );
+    expect(result).toEqual([["user", "@", ["test@test.com", "foo@bar.com"]]]);
     expect(errorCallback).not.toHaveBeenCalled();
   });
 

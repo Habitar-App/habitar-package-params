@@ -15,25 +15,28 @@ function queryParamParser(
     const search: QueryParamsType[] = [];
     const fields = queryString.replace(/[()]/gi, "").split(";");
     fields.map((field) => {
-      const matchOperator = field.match(
-        /(>=)|(<=)|(!=)|(!~)|(><)|(>)|(<)|(~)|(=)|(@)/g
+      const operatorMatch = field.match(
+        /^(.*?)(>=|<=|!=|!~|><|>|<|~|=|@)(.*)$/
       );
 
-      if (!matchOperator) throw new Error("Operator was not found");
-
-      if (matchOperator.length > 1)
-        throw new Error("You must provide only one operator");
-      const [operator] = matchOperator;
+      if (!operatorMatch) throw new Error("Operator was not found");
+      const [, , operator, rawValue] = operatorMatch;
 
       if (!operator) throw new Error("Invalid query param");
+      if (
+        rawValue.match(/^(>=|<=|!=|!~|><|>|<|~|=|@)/)
+      ) {
+        throw new Error("You must provide only one operator");
+      }
 
       let key;
       let value: any;
 
       if (operator === "@") {
-        key = field.split("@")[0];
+        const atIndex = field.indexOf("@");
+        key = field.slice(0, atIndex);
         value = field
-          .split("@")[1]
+          .slice(atIndex + 1)
           .replace(/[\[\]]/gi, "")
           .split(",")
           .map((item) => item.trim());
@@ -49,8 +52,9 @@ function queryParamParser(
           throw new Error("Between operator requires exactly 2 values");
         }
       } else {
-        key = field.split(operator)[0];
-        value = field.split(operator)[1];
+        const operatorIndex = field.indexOf(operator);
+        key = field.slice(0, operatorIndex);
+        value = field.slice(operatorIndex + operator.length);
       }
 
       if (fieldsConfigs?.length) {
