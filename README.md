@@ -1,3 +1,5 @@
+> ⚠️ **ARQUIVADO.** Este serviço foi absorvido por `@argentotech/params`. Veja `ARQUIVADO.md`.
+
 # @habitar/params
 
 To install dependencies:
